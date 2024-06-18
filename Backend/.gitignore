@@ -1,0 +1,7 @@
+build/Release
+
+node_modules/
+config.env
+
+.env
+.cache/
