@@ -14,7 +14,7 @@ const gameSchema = new mongoose.Schema({
         type: String,
         maxlength: [250, 'A game description can not have more then 250 characters'],
     },
-    features: {
+    feature: {
         type: String
     },
     genre : {
