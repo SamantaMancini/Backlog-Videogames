@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const gameRouter = require('./routes/gameRoute');
+const AppError = require('./utils/appError')
 
 // Set security cors 
 app.use(cors())
@@ -32,5 +33,10 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1/games', gameRouter);
+
+// Set a route for all non-matching routes
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find${req.originalUrl} on this server`, 404));
+});
 
 module.exports = app;
