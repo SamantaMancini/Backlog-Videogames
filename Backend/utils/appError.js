@@ -9,11 +9,4 @@
      }
   }
   
-  console.log(AppError)
-  // const AppError = {
-  //   message: message,
-  //   statusCode: statusCode,
-  //   status: `${statusCode}` .startsWith('4') ? 'fail': 'error',
-  //   isOperational: true,
-  // }
   module.exports = AppError;
