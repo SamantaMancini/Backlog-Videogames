@@ -28,8 +28,8 @@ const gameSchema = new mongoose.Schema({
     platform: {
         type: String,
         required: [true, 'A game must have a platform.'],
-    }
-})
+    },
+}, { versionKey: false })
 
 const Game = mongoose.model('Game', gameSchema)
 

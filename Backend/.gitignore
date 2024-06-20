@@ -5,3 +5,5 @@ config.env
 
 .env
 .cache/
+
+package-lock.json
