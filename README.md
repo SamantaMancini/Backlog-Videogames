@@ -34,7 +34,7 @@ If you don't have it, you can download it here:
 After the installation, you're ready to go.
 
 ### 1 - Clone the repository
-`git clone https://github.com/SamantaMancini/backlog-videogames.git`
+`git clone https://github.com/SamantaMancini/Backlog-Videogames.git`
 
 ### 2 - Install the dependencies
 
