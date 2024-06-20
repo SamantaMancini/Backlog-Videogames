@@ -7,7 +7,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const gameRouter = require('./routes/gameRoute');
-const AppError = require('./utils/appError')
+const AppError = require('./utils/appError');
+const globalError = require('./middlewares/middleware');
 
 // Set security cors 
 app.use(cors())
@@ -23,6 +24,10 @@ app.use(
     whitelist: ['name', 'description', 'genre'],
   }),
 );
+
+//Global Error Handling Middleware - 4 argument express recognize it as an error middleware 
+app.use(globalError);
+
 // Development loggin
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));

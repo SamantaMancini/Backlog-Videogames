@@ -8,5 +8,9 @@ router
     .get(gameController.getGames)
     .post(gameController.addGame)
 
-
+router
+    .route('/:id')
+    .post(gameController.updateGame)
+    .delete(gameController.deleteGame)
+    
 module.exports = router;
