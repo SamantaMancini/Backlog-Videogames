@@ -6,4 +6,4 @@ config.env
 .env
 .cache/
 
-package.json/package-lock.json
+package-lock.json
