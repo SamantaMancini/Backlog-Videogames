@@ -14,7 +14,7 @@ export const useFetchGames = (names) => {
           url: names ? `/api/v1/games?name=${names}` : `/api/v1/games`,
           method: 'get'
         });
-        setGames(response.data.data.games);
+        setGames(response.data.games);
       } catch (error) {
         setError(error);
       } finally {
