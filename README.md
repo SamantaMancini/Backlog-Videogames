@@ -63,6 +63,18 @@ Example CRUD
 for get all games:
 - GET {{LOCALHOST}}/api/v1/games
 
+filter games by name
+- GET {{LOCALHOST}}/api/v1/games?name=lol
+
+filter games by features
+- GET {{LOCALHOST}}/api/v1/games?features=Multiplayer
+
+filter games by genre
+- GET {{LOCALHOST}}/api/v1/games?genre=RPG
+
+filter games by platform
+- GET {{LOCALHOST}}/api/v1/games?platform=PC
+
 for create a game:
 - POST {{LOCALHOST}}/api/v1/games
 
