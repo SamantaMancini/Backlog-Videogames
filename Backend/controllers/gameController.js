@@ -1,4 +1,5 @@
 const Game = require('../models/gamesModel');
+const AppError = require('../utils/appError');
 
 
 // Add a new Game
@@ -19,10 +20,14 @@ exports.addGame = async (req, res, next) => {
 // Get all games
 exports.getGames = async (req, res, next) => {
   try {
-    let query = Game.find({});
+    const excludedFields = ['description', 'state']
+    const queryObj = {...req.query}
 
+    excludedFields.forEach((el) => {
+      delete queryObj[el]
+    })
+    let query = Game.find(queryObj)
     const games = await query;
-
     res.status(200).json({
       status: 'success',
       results: games.length,
@@ -34,6 +39,7 @@ exports.getGames = async (req, res, next) => {
     next(error);
   }
 };
+
 
 // Update an existing game
 exports.updateGame = async (req, res, next) => {
