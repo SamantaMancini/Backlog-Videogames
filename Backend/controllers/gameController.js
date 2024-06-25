@@ -32,9 +32,7 @@ exports.getGames = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       results: games.length,
-      data: {
-        games,
-      },
+      games: games
     });
   } catch (error) {
     next(error);
