@@ -42,15 +42,14 @@ After the installation, you're ready to go.
 
 ## 3 - MongoDB:
 
-- Go to [MongoDB](https://www.mongodb.com/try/download/community) and click "download msi" and install the server community and optional MongoDB compass GUI.
-- Download and install mongosh shell 
-- Open mongosh and press "Enter" for open the localhost (localhost:27017/test)
+- Go to [MongoDB](https://www.mongodb.com/try/download/community) and click "download msi" and install the server community and MongoDB compass GUI.
+- Open MongoDB compass GUI and create a database
 
 ### 4 - Environment variable
 
-Copy the `.env.example file` in the project's root folder and rename it `config.env`, add your string DATABASE (copy and paste the string from mongosh). <br/> Example: <br/>
-`PORT=3000`
-`DATABASE=mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.9`
+Copy the `.env.example file` in the project's root folder and rename it `config.env`, add your string in DATABASE (copy and paste the localhost). <br/> Example: <br/>
+`PORT=3000` <br/>
+`DATABASE=mongodb://localhost:27017/test?directConnection=true`
 
 ### 5 - Start it!
 
@@ -68,8 +67,8 @@ for create a game:
 - POST {{LOCALHOST}}/api/v1/games
 
 for update a game:
-- POST {{LOCALHOST}}/api/v1/games/game:id
+- POST {{LOCALHOST}}/api/v1/games/:id
 
 for delete a game:
-- DELETE {{LOCALHOST}}/api/v1/games/game:id
+- DELETE {{LOCALHOST}}/api/v1/games/:id
 
