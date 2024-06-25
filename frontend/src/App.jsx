@@ -7,7 +7,8 @@ function App() {
  const { games } = useFetchGames(searchInput)
  
  const handleSearch = (searchValue) => {
-  setSearchInput(searchValue)
+    setSearchInput(searchValue)
+  
  }
 
   return (
