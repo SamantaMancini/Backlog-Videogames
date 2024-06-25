@@ -8,9 +8,8 @@ function App() {
  
  const handleSearch = (searchValue) => {
   setSearchInput(searchValue)
-    setSearchInput(searchValue)
  }
- console.log(games)
+ console.log(games[0])
   return (
     <>
       <Searchbar onChange={(e) => handleSearch(e.target.value)} value={searchInput}/>
