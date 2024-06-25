@@ -28,6 +28,7 @@ exports.getGames = async (req, res, next) => {
     })
     let query = Game.find(queryObj)
     const games = await query;
+    
     res.status(200).json({
       status: 'success',
       results: games.length,
