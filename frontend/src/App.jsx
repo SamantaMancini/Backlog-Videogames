@@ -9,12 +9,19 @@ function App() {
  const handleSearch = (searchValue) => {
   setSearchInput(searchValue)
  }
- console.log(games[0])
+
   return (
     <>
       <Searchbar onChange={(e) => handleSearch(e.target.value)} value={searchInput}/>
       {games.map((game, index) => (
-        <div key={index}>{game.name}</div>
+        <div key={index}>
+        <p>title: {game.name}</p> 
+        <p>description: {game.description}</p> 
+        <p>features: {game.features}</p>
+        <p>genre: {game.genre}</p>
+        <p>platform: {game.platform}</p>
+        <p>state: {game.state}</p>
+        </div>
       ))}
     </>
   )
