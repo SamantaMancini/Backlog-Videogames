@@ -14,7 +14,7 @@ function App() {
     <>
       <Searchbar onChange={(e) => handleSearch(e.target.value)} value={searchInput}/>
       {games.map((game, index) => (
-        <li key={index}>{game.name}</li>
+        <div key={index}>{game.name}</div>
       ))}
     </>
   )
