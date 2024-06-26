@@ -5,11 +5,11 @@ const AppError = require('../utils/appError');
 // Add a new Game
 exports.addGame = async (req, res, next) => {
     try {
-      const game = await Game.create(req.body);
+      const games = await Game.create(req.body);
   
       res.status(201).json({
         status: 'success',
-        data: game,
+        games: games,
       });
     } catch (error) {
       next(error);
@@ -43,16 +43,16 @@ exports.getGames = async (req, res, next) => {
 // Update an existing game
 exports.updateGame = async (req, res, next) => {
   try {
-    const game = await Game.findByIdAndUpdate(req.params.id, req.body, {
+    const games = await Game.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidatos: true,
     });
-    if (!game) {
+    if (!games) {
       return next(new AppError('No game found with that ID', 404));
     }
     res.status(201).json({
       status: 'succes',
-      data: game,
+      games: games,
     });
   } catch (error) {
     next(error);
@@ -62,13 +62,13 @@ exports.updateGame = async (req, res, next) => {
 // Delete a game by ID
 exports.deleteGame = async (req, res, next) => {
   try {
-    const game = await Game.findByIdAndDelete(req.params.id);
-    if (!game) {
+    const games = await Game.findByIdAndDelete(req.params.id);
+    if (!games) {
       return next(new AppError('No game found', 404));
     }
     res.status(204).json({
       status: 'success',
-      data: null,
+      games: null,
     });
   } catch (error) {
     next(error);
