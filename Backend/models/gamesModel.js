@@ -14,8 +14,9 @@ const gameSchema = new mongoose.Schema({
         type: String,
         maxlength: [250, 'A game description can not have more then 250 characters'],
     },
-    features: {
-        type: String
+    feautures: {
+        type: String,
+        required: [true, 'A game must have a feauture: Multiplayer, Singleplayer, etc...'],
     },
     genre : {
         type: String,
@@ -24,6 +25,11 @@ const gameSchema = new mongoose.Schema({
     state: {
         type: String,
         required: [true, 'A game must have a state.'],
+        enum: {
+            values: ['Backlog', 'Playing', 'Completed', 'Retired'],
+            message: '{VALUE} is not supported'  
+        }
+        
     },
     platform: {
         type: String,
