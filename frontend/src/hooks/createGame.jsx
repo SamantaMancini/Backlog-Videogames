@@ -1,8 +1,9 @@
 import { request } from "../utils/axios-utils";
 
-export const useCreateGames = () => {
-        return request({
+export const useCreateGames = (data) => {
+       request({
           url: `/api/v1/games`,
-          method: 'post'
+          method: 'post',
+          data: data
         });
   };

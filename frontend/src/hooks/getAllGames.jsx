@@ -28,5 +28,5 @@ export const useFetchGames = (name) => {
     return () => {};
   }, [name]);
 
-  return { games, isLoading, error };
+  return { games, setGames, isLoading, error };
 };

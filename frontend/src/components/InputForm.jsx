@@ -1,26 +1,22 @@
-import { TextInput, Button } from "flowbite-react";
+import { TextInput } from "flowbite-react";
 
 import React from 'react'
 
-function InputForm({onClick, onSubmit, onChange, name, description}) {
+function InputForm({onSubmit, onChange, name, description, feautures, genre, platform, state}) {
   return (
     <form className="mt-5" onSubmit={onSubmit}>
     <label className="mt-5">Name: </label>
-        <TextInput onChange={onChange} value={name} name="name"/>
+        <TextInput onChange={onChange} value={name} name="name" />
     <label className="mt-5">Description: </label>
-        <TextInput onChange={onChange} value={description} name="description"/>
+        <TextInput onChange={onChange} value={description} name="description" />
     <label>Feautures: </label>
-        <TextInput />
+        <TextInput onChange={onChange} value={feautures} name="feautures" />
     <label>Genre: </label>
-        <TextInput />
+        <TextInput onChange={onChange} value={genre} name="genre" />
     <label>Platform: </label>
-        <TextInput />
+        <TextInput onChange={onChange} value={platform} name="platform" />
     <label>State: </label>
-        <TextInput />
-   <div className="flex gap-5 mt-10">
-    <Button type="submit" color="gray" onClick={onClick}>SAVE</Button>
-    <Button color="gray" onClick={onClick}>CANCEL</Button>
-    </div> 
+        <TextInput onChange={onChange} value={state} name="state" />
     </form>
   )
 }
