@@ -10,9 +10,11 @@ import { Pagination } from 'flowbite-react';
 
 
 
+
 const Dashboard = () => {
     const [searchInput, setSearchInput] = useState("");
     const [activeCard, setActiveCard] = useState(null);
+    const [selectedPlatforms, setSelectedPlatforms] = useState([]);
     const [popUp, setPopUp] = useState(false);
     const [showDiv, setShowDiv] = useState(false)
     const [currentPage, setCurrentPage] = useState(1); 
@@ -38,9 +40,17 @@ const Dashboard = () => {
   }
 
 const handleChecked = (index) => {
-  games.filter((platform) => { return platform.platform !== index })
+  const isSelected = selectedPlatforms.includes(index);
+  const updatedPlatform = isSelected ? 
+  games.filter((platform) => { return platform !== index })
+  : [...selectedPlatforms, index]
 
+setSelectedPlatforms(updatedPlatform)
 }
+
+const filteredGames = games.filter((game) => {
+  return selectedPlatforms.length === 0 || selectedPlatforms.includes(game.platform);
+});
   
   const onDrop = (status, position) => {
     console.log(`${activeCard} is going to place into ${status} and at the position ${position}`)
@@ -61,13 +71,14 @@ const handleChecked = (index) => {
         <div key={item._id}>
         <label>{item.platform}</label>
           <Checkbox
+          checked={selectedPlatforms.includes(item.platform)}
           onChange={() => handleChecked(item.platform)}/>
         </div>
       ))}
     </div>
     }
 <div>
-    {games.map((game) => (
+    {filteredGames.map((game) => (
   <div key={game._id}>
     <CardComponent 
     game={game} 
