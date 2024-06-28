@@ -4,13 +4,12 @@ import { Card } from "flowbite-react";
 import { Link } from 'react-router-dom';
 import PopUp from './PopUp';
 
-function CardComponent({games, open, onclick, close, pop}) {
+function CardComponent({game, open, onclick, close, pop, setActiveCard}) {
   
   
   return (
     <div className='flex flex-wrap gap-5'>
-        {games.map((game) => (
-        <Card className="max-w-sm mt-3" key={game._id}>
+        <Card className="max-w-sm mt-3 cursor-grab active:opacity-[0.5] active:text-gray-100" draggable onDragStart={() => setActiveCard(game._id)} onDragEnd={() => setActiveCard(null)}>
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{game.name}</h2> 
         <p className="font-normal text-gray-700 dark:text-gray-400">description: {game.description}</p> 
         <p className="font-normal text-gray-700 dark:text-gray-400">features: {game.feautures}</p>
@@ -30,8 +29,6 @@ function CardComponent({games, open, onclick, close, pop}) {
       </Button>
       </div>
         </Card>
-      ))}
-
     </div>
   )
 }
