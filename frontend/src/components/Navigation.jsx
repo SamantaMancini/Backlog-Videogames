@@ -1,10 +1,10 @@
 import { Tabs } from 'flowbite-react'
 import CardComponent from './Card'
-import Buttons from './Buttons'
+
 
 import React from 'react'
 
-function Navigation({value, games, filteredGames, onclick, open, close, pop, setActiveCard, name, onChange }) {
+function Navigation({value, filteredGames, onclick, open, close, pop, setActiveCard, name, onChange }) {
   return (
 <div className="overflow-x-auto mt-5">
       <Tabs aria-label="Full width tabs" variant="fullWidth">
@@ -14,8 +14,7 @@ function Navigation({value, games, filteredGames, onclick, open, close, pop, set
          value={value}
          >
       <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
-      {filteredGames.length > 0 ?
-      filteredGames.map((game) => (
+      {filteredGames.map((game) => (
       <CardComponent key={game._id}
        game={game} 
         open={open} 
@@ -24,16 +23,7 @@ function Navigation({value, games, filteredGames, onclick, open, close, pop, set
         pop={pop} 
         setActiveCard={setActiveCard}
       />
-    )) : (games.map((game) => (
-      <CardComponent key={game._id}
-       game={game} 
-        open={open} 
-        onclick={onclick} 
-        close={close} 
-        pop={pop} 
-        setActiveCard={setActiveCard}
-      />
-    )))}
+    ))}
     </div>
          </Tabs.Item>
         <Tabs.Item title="Playing"

@@ -4,7 +4,7 @@ import { useFetchGames } from '../hooks/getAllGames';
 import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
-import { Pagination } from 'flowbite-react';
+import Pagination from '../components/Pagination';
 import Buttons from '../components/Buttons';
 
 
@@ -49,7 +49,7 @@ const Dashboard = () => {
     // Filter games based on selected platform (or display all if no selection)
     const filtered = selectedValue
       ? games.filter((game) => game[selectedField] === selectedValue)
-      : games;
+      : games.filter((game) => game.state === selectedValue);
 
     setFilteredGames(filtered);
   };
@@ -109,10 +109,7 @@ const Dashboard = () => {
     value={'Backlog'}
     />
 
-
-    <div className="flex sm:justify-center">
-    <Pagination currentPage={currentPage} totalPages={14} onPageChange={onPageChange} showIcons />
-    </div>
+    <Pagination onpage={onPageChange} totalpage={14} page={currentPage}/>
    <h1>ActiveCard: {activeCard}</h1>
     </div>
   )
