@@ -4,7 +4,7 @@ import Buttons from './Buttons'
 
 import React from 'react'
 
-function Navigation({value, games, filteredGames, onclick, open, close, pop, setActiveCard, handleShow, name, onChange }) {
+function Navigation({value, games, filteredGames, onclick, open, close, pop, setActiveCard, name, onChange }) {
   return (
 <div className="overflow-x-auto mt-5">
       <Tabs aria-label="Full width tabs" variant="fullWidth">
@@ -13,6 +13,7 @@ function Navigation({value, games, filteredGames, onclick, open, close, pop, set
          onChange={onChange}
          value={value}
          >
+      <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
       {filteredGames.length > 0 ?
       filteredGames.map((game) => (
       <CardComponent key={game._id}
@@ -33,6 +34,7 @@ function Navigation({value, games, filteredGames, onclick, open, close, pop, set
         setActiveCard={setActiveCard}
       />
     )))}
+    </div>
          </Tabs.Item>
         <Tabs.Item title="Playing"
           name={name}
@@ -43,7 +45,6 @@ function Navigation({value, games, filteredGames, onclick, open, close, pop, set
         <Tabs.Item title="Retired">
         </Tabs.Item>
       </Tabs>
-      <Buttons handleShow={handleShow}/>
     </div>
   )
 }

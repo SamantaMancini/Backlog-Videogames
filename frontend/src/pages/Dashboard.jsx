@@ -5,7 +5,7 @@ import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react';
-
+import Buttons from '../components/Buttons';
 
 
 
@@ -61,6 +61,40 @@ const Dashboard = () => {
     <div className='flex flex-col justify-center items-center'>
     <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
     <Searchbar onChange={(e) => handleSearch(e.target.value)} />
+    <Buttons handleShow={handleShow}/>
+    {showDiv === "platforms" &&
+    <div className='flex justify-center items-center pt-5'>
+    <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
+      <select onChange={handleFilterChange} name='platform'>
+      <option value="">All</option>
+      {games.map((item) => (
+        <option key={item._id} value={item.platform}>{item.platform}</option>
+      ))}
+      </select>
+      </div>
+    }
+    {showDiv === "genre" &&
+    <div className='flex justify-start items-start pt-5'>
+    <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
+      <select onChange={handleFilterChange} name='genre'>
+      <option value="">All</option>
+      {games.map((item) => (
+        <option key={item._id} value={item.genre}>{item.genre}</option>
+      ))}
+      </select>
+      </div>
+    }
+    {showDiv === "feautures" &&
+    <div className='flex justify-start items-start pt-5'>
+    <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
+      <select onChange={handleFilterChange} name='feautures'>
+      <option value="">All</option>
+      {games.map((item) => (
+        <option key={item._id} value={item.feautures}>{item.feautures}</option>
+      ))}
+      </select>
+      </div>
+    }
     <Navigation 
     games={games} 
     filteredGames={filteredGames} 
@@ -75,37 +109,8 @@ const Dashboard = () => {
     value={'Backlog'}
     />
 
-    {showDiv === "platforms" &&
-    <div className='flex justify-start items-start pt-5'>
-      <select onChange={handleFilterChange} name='platform'>
-      <option value="">All</option>
-      {games.map((item) => (
-        <option key={item._id} value={item.platform}>{item.platform}</option>
-      ))}
-      </select>
-      </div>
-    }
-    {showDiv === "genre" &&
-    <div className='flex justify-start items-start pt-5'>
-      <select onChange={handleFilterChange} name='genre'>
-      <option value="">All</option>
-      {games.map((item) => (
-        <option key={item._id} value={item.genre}>{item.genre}</option>
-      ))}
-      </select>
-      </div>
-    }
-    {showDiv === "feautures" &&
-    <div className='flex justify-start items-start pt-5'>
-      <select onChange={handleFilterChange} name='feautures'>
-      <option value="">All</option>
-      {games.map((item) => (
-        <option key={item._id} value={item.feautures}>{item.feautures}</option>
-      ))}
-      </select>
-      </div>
-    }
-    <div className="flex overflow-x-auto sm:justify-center bottom-0 absolute pb-4">
+
+    <div className="flex sm:justify-center">
     <Pagination currentPage={currentPage} totalPages={14} onPageChange={onPageChange} showIcons />
     </div>
    <h1>ActiveCard: {activeCard}</h1>
