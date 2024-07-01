@@ -23,10 +23,14 @@ const Dashboard = () => {
     
 
     const handleSearch = (searchValue) => {
-       setSearchInput(searchValue)  
+      let new_value = Object.assign({}, searchInput, {"name":searchValue})
+      setSearchInput(new_value)
     }
 
-
+    const handleStatus = (status) => {
+      let new_value = Object.assign({}, searchInput, {"state":status})
+      setSearchInput(new_value)
+    }
 
     const handleDelete = async (id) => {
       try {
@@ -46,71 +50,88 @@ const Dashboard = () => {
     const selectedValue = event.target.value;
     const selectedField = event.target.name;
 
-    // Filter games based on selected platform (or display all if no selection)
-    const filtered = selectedValue
-      ? games.filter((game) => game[selectedField] === selectedValue)
-      : games.filter((game) => game.state === selectedValue);
+    // console.log("selectedValue:", selectedValue)
+    // console.log("selectedField:", selectedField)
 
-    setFilteredGames(filtered);
+    // Filter games based on selected platform (or display all if no selection)
+    // const filtered = selectedValue
+    //   ? games.filter((game) => game[selectedField] === selectedValue)
+    //   : games.filter((game) => game.state === selectedValue);
+
+    // setFilteredGames(filtered);
+    let filter = {}
+    if (selectedValue) {
+      filter[selectedField] = selectedValue
+    }
+    else {
+      delete searchInput[selectedField]
+    }
+
+    let new_value = Object.assign({}, searchInput, filter)
+    setSearchInput(new_value)
   };
 
   const onDrop = (status, position) => {
     console.log(`${activeCard} is going to place into ${status} and at the position ${position}`)
   }
+
   return (
     <div className='flex flex-col justify-center items-center'>
-    <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
-    <Searchbar onChange={(e) => handleSearch(e.target.value)} />
-    <Buttons handleShow={handleShow}/>
-    {showDiv === "platforms" &&
-    <div className='flex justify-center items-center pt-5'>
-    <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
-      <select onChange={handleFilterChange} name='platform'>
-      <option value="">All</option>
-      {games.map((item) => (
-        <option key={item._id} value={item.platform}>{item.platform}</option>
-      ))}
-      </select>
-      </div>
-    }
-    {showDiv === "genre" &&
-    <div className='flex justify-start items-start pt-5'>
-    <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
-      <select onChange={handleFilterChange} name='genre'>
-      <option value="">All</option>
-      {games.map((item) => (
-        <option key={item._id} value={item.genre}>{item.genre}</option>
-      ))}
-      </select>
-      </div>
-    }
-    {showDiv === "feautures" &&
-    <div className='flex justify-start items-start pt-5'>
-    <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
-      <select onChange={handleFilterChange} name='feautures'>
-      <option value="">All</option>
-      {games.map((item) => (
-        <option key={item._id} value={item.feautures}>{item.feautures}</option>
-      ))}
-      </select>
-      </div>
-    }
-    <Navigation 
-    games={games} 
-    filteredGames={filteredGames} 
-    onclick={handleDelete}
-    open={() => setPopUp(true)}
-    close={() => setPopUp(false)}
-    pop={popUp}
-    setActiveCard={setActiveCard}
-    handleShow={handleShow}
-    onChange={handleFilterChange}
-    name='state'
-    value={'Backlog'}
-    />
+      <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
+      <Searchbar onChange={(e) => handleSearch(e.target.value)} />
+      <Buttons handleShow={handleShow}/>
 
-    <Pagination onpage={onPageChange} totalpage={14} page={currentPage}/>
-   <h1>ActiveCard: {activeCard}</h1>
+      {showDiv === "platforms" &&
+        <div className='flex justify-center items-center pt-5'>
+          <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
+          <select onChange={handleFilterChange} name='platform'>
+            <option value="">All</option>
+            {games.map((item) => (
+              <option key={item._id} value={item.platform}>{item.platform}</option>
+            ))}
+          </select>
+        </div>
+      }
+
+      {showDiv === "genre" &&
+      <div className='flex justify-start items-start pt-5'>
+      <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
+        <select onChange={handleFilterChange} name='genre'>
+        <option value="">All</option>
+        {games.map((item) => (
+          <option key={item._id} value={item.genre}>{item.genre}</option>
+        ))}
+        </select>
+        </div>
+      }
+
+      { showDiv === "feautures" &&
+        <div className='flex justify-start items-start pt-5'>
+          <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
+          <select onChange={handleFilterChange} name='feautures'>
+            <option value="">All</option>
+            {games.map((item) => (
+              <option key={item._id} value={item.feautures}>{item.feautures}</option>
+            ))}
+          </select>
+        </div>
+      }
+      <Navigation 
+        games={games} 
+        filteredGames={filteredGames} 
+        onclick={handleDelete}
+        open={() => setPopUp(true)}
+        close={() => setPopUp(false)}
+        pop={popUp}
+        setActiveCard={setActiveCard}
+        handleShow={handleShow}
+        onChange={handleStatus}
+        name='state'
+        value={'Backlog'}
+      />
+
+      <Pagination onpage={onPageChange} totalpage={14} page={currentPage}/>
+      <h1>ActiveCard: {activeCard}</h1>
     </div>
   )
 }
