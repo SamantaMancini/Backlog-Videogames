@@ -8,6 +8,7 @@ import { useCreateGames } from '../hooks/createGame'
 import { Link } from 'react-router-dom'
 
 const Add = () => {
+    const [error, setError] = useState(null);
    
     const [inputFile, setInputFile] = useState({
         name: "",
@@ -19,13 +20,13 @@ const Add = () => {
     })
 
     const location = useParams()
-    console.log(location.id)
+    
     
     const handleChange = (e) => {
         setInputFile({...inputFile, [e.target.name]: e.target.value})   
     }
 
-    const postGame = async () => {
+    const createGame = async () => {
         try {
             setInputFile({
                 name: inputFile.name,
@@ -37,12 +38,9 @@ const Add = () => {
               })
               await useCreateGames(inputFile)       
         } catch (error) {
-            console.log(error)
-        } finally {
-            alert("Gioco creato")
-        }
-
+            setError(error)
     }
+}
     const onSubmit = (e) => {
         if (!inputFile) {
             e.preventDefault()
@@ -59,12 +57,10 @@ const Add = () => {
                 platform: inputFile.platform,
                 state: inputFile.state
               })
-              await useEditGames(location.id)  
+              await useEditGames(location.id, inputFile)  
         } catch (error) {
-            console.log(error)
-        } finally {
-            alert("Gioco editato")
-        }
+            setError(error)
+        } 
     }
     
     return (
@@ -79,8 +75,11 @@ const Add = () => {
             state={inputFile.state}
             />
             <div className="flex gap-5 mt-10">
-            <Button type="submit" color="gray" onClick={editGame}>SAVE</Button>
+            <Button type="submit" color="gray" onClick={createGame}>CREATE</Button>
+            <Button type="submit" color="gray" onClick={editGame}>EDIT</Button>
             <Link to={"/"}><Button color="gray">CANCEL</Button></Link>
+            {error &&
+            <h2>Errore: {error}</h2>}
             </div> 
         </div>
   )

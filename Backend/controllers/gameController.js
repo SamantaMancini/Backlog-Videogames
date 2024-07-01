@@ -1,6 +1,6 @@
 const Game = require('../models/gamesModel');
 const AppError = require('../utils/appError');
-
+const APIFeauters = require('../utils/apiFeautures')
 
 // Add a new Game
 exports.addGame = async (req, res, next) => {
@@ -20,14 +20,10 @@ exports.addGame = async (req, res, next) => {
 // Get all games
 exports.getGames = async (req, res, next) => {
   try {
-    const excludedFields = ['description', 'state']
-    const queryObj = {...req.query}
 
-    excludedFields.forEach((el) => {
-      delete queryObj[el]
-    })
-    let query = Game.find(queryObj)
-    const games = await query;
+    const features = new APIFeauters(Game.find(), req.query)
+    .filter()
+    const games = await features.query;
     
     res.status(200).json({
       status: 'success',
@@ -40,7 +36,7 @@ exports.getGames = async (req, res, next) => {
 };
 
 
-// Update an existing game
+// Update an existing user
 exports.updateGame = async (req, res, next) => {
   try {
     const games = await Game.findByIdAndUpdate(req.params.id, req.body, {
@@ -48,11 +44,11 @@ exports.updateGame = async (req, res, next) => {
       runValidatos: true,
     });
     if (!games) {
-      return next(new AppError('No game found with that ID', 404));
+      return next(new AppError('No user found with that ID', 404));
     }
     res.status(201).json({
-      status: 'succes',
-      games: games,
+      status: 'success',
+      data: games,
     });
   } catch (error) {
     next(error);

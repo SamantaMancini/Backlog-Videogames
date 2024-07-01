@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
 import { request } from "../utils/axios-utils";
+import { useState, useEffect } from "react";
 
-export const useFetchGames = (name) => {
+export const useFetchGames = (name) => { // Set default name to empty string
   const [games, setGames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,11 +9,13 @@ export const useFetchGames = (name) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setError(null); // Clear any previous errors
+
       try {
         const response = await request({
           url: `/api/v1/games`,
           method: 'get',
-          params: {'name': name === "" ? null : name}
+          params: { name: name === '' ? null : name }, // Send null for empty name
         });
         setGames(response.data.games);
       } catch (error) {
@@ -24,9 +26,7 @@ export const useFetchGames = (name) => {
     };
 
     fetchData();
+  }, [name]); // Dependency on name only
 
-    return () => {};
-  }, [name]);
-
-  return { games, setGames, isLoading, error };
+  return { games, isLoading, error };
 };
