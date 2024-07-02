@@ -53,13 +53,8 @@ const Add = () => {
             genre={inputFile.genre}
             platform={inputFile.platform}
             state={inputFile.state}
+            onClick={createGame}
             />
-            <div className="flex gap-5 mt-10">
-            <Button type="submit" color="gray" onClick={createGame}>SAVE</Button>
-            <Link to={"/"}><Button color="gray">CANCEL</Button></Link>
-            {error &&
-            <h2>Errore: {error}</h2>}
-            </div> 
         </div>
   )
 }

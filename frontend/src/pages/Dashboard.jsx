@@ -6,7 +6,7 @@ import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
 import Buttons from '../components/Buttons';
-
+import AdvanceSearch from '../components/AdvanceSearch';
 
 
 const Dashboard = () => {
