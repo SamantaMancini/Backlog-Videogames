@@ -4,7 +4,7 @@ import { useFetchGames } from '../hooks/getAllGames';
 import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
-import Pagination from '../components/Pagination';
+import { Pagination } from 'flowbite-react'
 import Buttons from '../components/Buttons';
 
 
@@ -37,16 +37,6 @@ const Dashboard = () => {
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
     const selectedField = event.target.name;
-
-    // console.log("selectedValue:", selectedValue)
-    // console.log("selectedField:", selectedField)
-
-    // Filter games based on selected platform (or display all if no selection)
-    // const filtered = selectedValue
-    //   ? games.filter((game) => game[selectedField] === selectedValue)
-    //   : games.filter((game) => game.state === selectedValue);
-
-    // setFilteredGames(filtered);
     let filter = {}
     if (selectedValue) {
       filter[selectedField] = selectedValue

@@ -1,9 +1,11 @@
-import { TextInput } from "flowbite-react";
+import { TextInput, Button } from "flowbite-react";
+import { Link } from "react-router-dom"
 
 import React from 'react'
 
-function InputForm({onSubmit, onChange, name, description, feautures, genre, platform, state}) {
+function InputForm({onSubmit, onClick, onChange, name, description, feautures, genre, platform, state}) {
   return (
+    <>
     <form className="mt-5" onSubmit={onSubmit}>
     <label className="mt-5">Name: </label>
         <TextInput onChange={onChange} value={name} name="name" />
@@ -18,6 +20,11 @@ function InputForm({onSubmit, onChange, name, description, feautures, genre, pla
     <label>State: </label>
         <TextInput onChange={onChange} value={state} name="state" />
     </form>
+    <div className="flex gap-5 mt-10">
+        <Button type="submit" color="gray" onClick={onClick}>SAVE</Button>
+        <Link to={"/"}><Button color="gray">CANCEL</Button></Link>
+    </div>
+    </>
   )
 }
 
