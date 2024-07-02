@@ -24,11 +24,14 @@ exports.getGames = async (req, res, next) => {
     let filters = {}
     if (req.query.genre) {
       filters.genre = req.query.genre;
-    } else if (req.query.platform) {
+    } 
+    if (req.query.platform) {
       filters.platform = req.query.platform;
-    } else if (req.query.feautures) {
+    } 
+    if (req.query.feautures) {
       filters.feautures = req.query.feautures;
-    } else if (req.query.state) {
+    } 
+    if (req.query.state) {
       filters.state = req.query.state;
     }
     const games = await Game.find({ $and: [{name: {$regex: search, $options: "i"} }, filters]})
