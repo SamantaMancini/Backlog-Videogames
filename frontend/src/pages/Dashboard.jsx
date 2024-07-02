@@ -4,7 +4,7 @@ import { useFetchGames } from '../hooks/getAllGames';
 import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
-import Pagination from '../components/Pagination';
+import { Pagination } from 'flowbite-react'
 import Buttons from '../components/Buttons';
 
 
@@ -13,13 +13,14 @@ const Dashboard = () => {
     const [searchInput, setSearchInput] = useState("");
     const { games } = useFetchGames(searchInput)
     const [activeCard, setActiveCard] = useState(null);
-    const [filteredGames, setFilteredGames] = useState([])
     const [popUp, setPopUp] = useState(false);
     const [showDiv, setShowDiv] = useState(null)
     const [currentPage, setCurrentPage] = useState(1);
     
     
-    const onPageChange = (page) => setCurrentPage(page);
+    const onPageChange = (page) => {
+      setCurrentPage(page)
+    }
     
 
     const handleSearch = (searchValue) => {
@@ -28,7 +29,7 @@ const Dashboard = () => {
     }
 
     const handleStatus = (status) => {
-      let new_value = Object.assign({}, searchInput, {"state":status})
+      let new_value = Object.assign({}, searchInput, {"state": status})
       setSearchInput(new_value)
     }
 
@@ -49,16 +50,6 @@ const Dashboard = () => {
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
     const selectedField = event.target.name;
-
-    // console.log("selectedValue:", selectedValue)
-    // console.log("selectedField:", selectedField)
-
-    // Filter games based on selected platform (or display all if no selection)
-    // const filtered = selectedValue
-    //   ? games.filter((game) => game[selectedField] === selectedValue)
-    //   : games.filter((game) => game.state === selectedValue);
-
-    // setFilteredGames(filtered);
     let filter = {}
     if (selectedValue) {
       filter[selectedField] = selectedValue
@@ -117,8 +108,7 @@ const Dashboard = () => {
         </div>
       }
       <Navigation 
-        games={games} 
-        filteredGames={filteredGames} 
+        games={games}  
         onclick={handleDelete}
         open={() => setPopUp(true)}
         close={() => setPopUp(false)}
@@ -127,10 +117,15 @@ const Dashboard = () => {
         handleShow={handleShow}
         onChange={handleStatus}
         name='state'
-        value={'Backlog'}
       />
-
-      <Pagination onpage={onPageChange} totalpage={14} page={currentPage}/>
+      <div>{currentPage}/14</div>
+      <Pagination 
+        layout="navigation" 
+        onPageChange={onPageChange} 
+        totalPages={14} 
+        currentPage={currentPage}
+        showIcons
+        />
       <h1>ActiveCard: {activeCard}</h1>
     </div>
   )
