@@ -24,12 +24,8 @@ const gameSchema = new mongoose.Schema({
     },
     state: {
         type: String,
-        required: [true, 'A game must have a state.'],
-        enum: {
-            values: ['Backlog', 'Playing', 'Completed', 'Retired'],
-            message: '{VALUE} is not supported'  
-        }
-        
+        default: 'Backlog',
+        set: v => v === '' ? 'Backlog' : v
     },
     platform: {
         type: String,
