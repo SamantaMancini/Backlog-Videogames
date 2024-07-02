@@ -6,7 +6,7 @@ import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
 import Buttons from '../components/Buttons';
-
+import AdvanceSearch from '../components/AdvanceSearch';
 
 
 const Dashboard = () => {
@@ -70,6 +70,7 @@ const Dashboard = () => {
     <div className='flex flex-col justify-center items-center'>
       <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
       <Searchbar onChange={(e) => handleSearch(e.target.value)} />
+      <AdvanceSearch games={games} searchInput={searchInput}/>
       <Buttons handleShow={handleShow}/>
 
       {showDiv === "platforms" &&
