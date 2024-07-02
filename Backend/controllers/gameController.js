@@ -1,6 +1,6 @@
 const Game = require('../models/gamesModel');
 const AppError = require('../utils/appError');
-const APIFeauters = require('../utils/apiFeautures')
+
 
 // Add a new Game
 exports.addGame = async (req, res, next) => {
@@ -20,10 +20,19 @@ exports.addGame = async (req, res, next) => {
 // Get all games
 exports.getGames = async (req, res, next) => {
   try {
-
-    const features = new APIFeauters(Game.find(), req.query)
-    .filter()
-    const games = await features.query;
+    const search = req.query.name || "";
+    let filters = {}
+    if (req.query.genre) {
+      filters.genre = req.query.genre;
+    } else if (req.query.platform) {
+      filters.platform = req.query.platform;
+    } else if (req.query.feautures) {
+      filters.feautures = req.query.feautures;
+    } else if (req.query.state) {
+      filters.state = req.query.state;
+    }
+    const games = await Game.find({ $and: [{name: {$regex: search, $options: "i"} }, filters]})
+    
     
     res.status(200).json({
       status: 'success',
