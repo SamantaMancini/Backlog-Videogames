@@ -1,4 +1,4 @@
-import { TextInput, Button } from "flowbite-react";
+import { TextInput, Button, Select, Label } from "flowbite-react";
 import { Link } from "react-router-dom"
 
 import React from 'react'
@@ -7,18 +7,49 @@ function InputForm({onSubmit, onClick, onChange, name, description, feautures, g
   return (
     <>
     <form className="mt-5" onSubmit={onSubmit}>
-    <label className="mt-5">Name: </label>
-        <TextInput onChange={onChange} value={name} name="name" />
-    <label className="mt-5">Description: </label>
-        <TextInput onChange={onChange} value={description} name="description" />
-    <label>Feautures: </label>
-        <TextInput onChange={onChange} value={feautures} name="feautures" />
-    <label>Genre: </label>
-        <TextInput onChange={onChange} value={genre} name="genre" />
-    <label>Platform: </label>
-        <TextInput onChange={onChange} value={platform} name="platform" />
-    <label>State: </label>
-        <TextInput onChange={onChange} value={state} name="state" />
+    <Label htmlFor="name" className="mt-5" value="Name:"/>
+        <TextInput id="name" onChange={onChange} value={name} name="name" required />
+    <Label htmlFor="description" className="mt-5" value="Description:"/>
+        <TextInput id="description" onChange={onChange} value={description} name="description" required />
+    <Label htmlFor="feautures" value="Feautures:"/>
+        <Select id="feautures" onChange={onChange} value={feautures} name="feautures" required>
+        <option value={""}></option>
+        <option>Single-Player</option>
+        <option>Multi-Player</option>
+        <option>Co-Op</option>
+        <option>Moba</option>
+        <option>Altro</option>
+        </Select>
+    <Label htmlFor="genre" value="Genre:" />
+        <Select id="genre" onChange={onChange} value={genre} name="genre">
+        <option value={""}></option>
+        <option>Adventure</option>
+        <option>Action</option>
+        <option>RPG</option>
+        <option>Platform</option>
+        <option>Cyberpunk</option>
+        <option>Horror</option>
+        <option>Sci-fi</option>
+        <option>Altro</option>
+        </Select>
+    <Label htmlFor="platform" value="Platform:" />
+        <Select id="platform" onChange={onChange} value={platform} name="platform">
+        <option value={""}></option>
+        <option>PC</option>
+        <option>PS5</option>
+        <option>PS4</option>
+        <option>Nintendo Switch</option>
+        <option>XBOX 360</option>
+        <option>Altro</option>
+        </Select>
+    <Label htmlFor="state" value="State:" />
+        <Select id="state" onChange={onChange} value={state} name="state">
+        <option value={""}></option>
+        <option>Backlog</option>
+        <option>Playing</option>
+        <option>Completed</option>
+        <option>Retired</option>
+        </Select>
     </form>
     <div className="flex gap-5 mt-10">
         <Button type="submit" color="gray" onClick={onClick}>SAVE</Button>

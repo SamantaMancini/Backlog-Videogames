@@ -1,17 +1,15 @@
 import React from 'react'
 import InputForm from '../components/InputForm'
-import { Button } from 'flowbite-react'
 import { useState, useEffect } from 'react'
 import { useEditGames } from '../hooks/editGame'
 import { useParams } from 'react-router-dom'
 import { useFetchGames } from '../hooks/getAllGames';
-
+import { useNavigate } from 'react-router-dom'
 
 const Edit = () => {
-    const [error, setError] = useState(null);
     const { id } = useParams()
     const { games } = useFetchGames()
-    
+    const navigate = useNavigate()
     const [inputFile, setInputFile] = useState(null)
  
     console.log(inputFile)
@@ -40,8 +38,11 @@ const Edit = () => {
             setInputFile()
               await useEditGames(id, inputFile)  
         } catch (error) {
-            setError(error)
-        } 
+            alert(error)
+        } finally {
+            alert("Game Edited!")
+            navigate("/")
+        }
     }
     
     return (

@@ -1,12 +1,11 @@
 import React from 'react'
 import InputForm from '../components/InputForm'
-import { Button } from 'flowbite-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCreateGames } from '../hooks/createGame'
-import { Link } from 'react-router-dom'
+
 
 const Add = () => {
-    const [error, setError] = useState(null);
    
     const [inputFile, setInputFile] = useState({
         name: "",
@@ -16,14 +15,21 @@ const Add = () => {
         platform: "",
         state: ""
     })
-    
-    
+
+    const navigate = useNavigate()
     const handleChange = (e) => {
         setInputFile({...inputFile, [e.target.name]: e.target.value})   
     }
 
-    const createGame = async () => {
-        try {
+    const createGame =  () => {
+        if (inputFile.name === "" || 
+            inputFile.description === "" || 
+            inputFile.feautures === "" || 
+            inputFile.genre === "" || 
+            inputFile.platform === "") 
+            {
+            alert("Please fill all the fields")
+        } else {
             setInputFile({
                 name: inputFile.name,
                 description: inputFile.description,
@@ -32,10 +38,11 @@ const Add = () => {
                 platform: inputFile.platform,
                 state: inputFile.state
               })
-              await useCreateGames(inputFile)       
-        } catch (error) {
-            setError(error)
-    }
+            useCreateGames(inputFile)
+            alert("Game created!")
+            navigate("/") 
+        }
+     
 }
     const onSubmit = (e) => {
         if (!inputFile) {
@@ -43,6 +50,7 @@ const Add = () => {
         }
     }
     
+
     return (
         <div className='flex flex-col justify-center items-center'>
             <h1>Add</h1>
@@ -55,6 +63,7 @@ const Add = () => {
             state={inputFile.state}
             onClick={createGame}
             />
+        
         </div>
   )
 }

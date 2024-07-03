@@ -5,7 +5,7 @@ import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
-import Buttons from '../components/Buttons';
+import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
 
 
@@ -14,7 +14,6 @@ const Dashboard = () => {
     const { games } = useFetchGames(searchInput)
     const [activeCard, setActiveCard] = useState(null);
     const [popUp, setPopUp] = useState(false);
-    const [showDiv, setShowDiv] = useState(null)
     const [currentPage, setCurrentPage] = useState(1);
     
     
@@ -42,10 +41,7 @@ const Dashboard = () => {
         setPopUp(false)
       }
     }
-  
-  const handleShow = (id) => {
-      setShowDiv(id)
-  }
+
 
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
@@ -71,43 +67,7 @@ const Dashboard = () => {
       <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
       <Searchbar onChange={(e) => handleSearch(e.target.value)} />
       <AdvanceSearch games={games} searchInput={searchInput}/>
-      <Buttons handleShow={handleShow}/>
-
-      {showDiv === "platforms" &&
-        <div className='flex justify-center items-center pt-5'>
-          <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
-          <select onChange={handleFilterChange} name='platform'>
-            <option value="">All</option>
-            {games.map((item) => (
-              <option key={item._id} value={item.platform}>{item.platform}</option>
-            ))}
-          </select>
-        </div>
-      }
-
-      {showDiv === "genre" &&
-      <div className='flex justify-start items-start pt-5'>
-      <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
-        <select onChange={handleFilterChange} name='genre'>
-        <option value="">All</option>
-        {games.map((item) => (
-          <option key={item._id} value={item.genre}>{item.genre}</option>
-        ))}
-        </select>
-        </div>
-      }
-
-      { showDiv === "feautures" &&
-        <div className='flex justify-start items-start pt-5'>
-          <div className='flex gap-2 cursor-pointer' onClick={() => setShowDiv(false)}>x</div>
-          <select onChange={handleFilterChange} name='feautures'>
-            <option value="">All</option>
-            {games.map((item) => (
-              <option key={item._id} value={item.feautures}>{item.feautures}</option>
-            ))}
-          </select>
-        </div>
-      }
+      <Selects onChange={handleFilterChange} />
       <Navigation 
         games={games}  
         onclick={handleDelete}
@@ -115,7 +75,6 @@ const Dashboard = () => {
         close={() => setPopUp(false)}
         pop={popUp}
         setActiveCard={setActiveCard}
-        handleShow={handleShow}
         onChange={handleStatus}
         name='state'
       />
