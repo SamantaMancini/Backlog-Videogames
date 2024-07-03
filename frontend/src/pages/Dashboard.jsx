@@ -5,7 +5,7 @@ import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
-import Buttons from '../components/Buttons';
+import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
 
 
@@ -79,7 +79,6 @@ const Dashboard = () => {
         close={() => setPopUp(false)}
         pop={popUp}
         setActiveCard={setActiveCard}
-        handleShow={handleShow}
         onChange={handleStatus}
         name='state'
         value={'Backlog'}
