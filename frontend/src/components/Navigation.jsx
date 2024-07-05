@@ -9,7 +9,19 @@ function changeActiveTab(tab, callback) {
   callback(lists[tab])
 }
 
-function Navigation({onclick, open, close, pop, setActiveCard, name, onChange, games }) {
+
+
+function Navigation({
+  onclick, 
+  open, 
+  close, 
+  pop, 
+  setActiveCard, 
+  name, 
+  onChange, 
+  games 
+}) {
+  
   return (
     <div className="overflow-x-auto mt-5">
       <Tabs aria-label="Full width tabs" variant="fullWidth" onActiveTabChange={(tab) => changeActiveTab(tab, onChange)}>
@@ -45,15 +57,15 @@ function Navigation({onclick, open, close, pop, setActiveCard, name, onChange, g
 
         <div className={"state"} onDragOver={onDragOver} onDrop={onDrop}>Drop: here</div>
           <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
-            {games.map((game) => (
-              <CardComponent key={game._id}
-                game={game} 
-                open={open} 
-                onclick={onclick} 
-                close={close} 
-                pop={pop} 
-                setActiveCard={setActiveCard}
-              />
+            {games.filter((game) => game.state.includes("Backlog")).map(game => 
+            (<CardComponent key={game._id} 
+              game={game}
+              open={open}
+              close={close}
+              pop={pop}
+              onclick={onclick}
+              setActiveCard={setActiveCard}
+            />
             ))}
           </div>
         </Tabs.Item>
@@ -61,15 +73,15 @@ function Navigation({onclick, open, close, pop, setActiveCard, name, onChange, g
           name={name}
         >
           <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
-            {games.map((game) => (
-              <CardComponent key={game._id}
-                game={game} 
-                open={open} 
-                onclick={onclick} 
-                close={close} 
-                pop={pop} 
-                setActiveCard={setActiveCard}
-              />
+          {games.filter((game) => game.state.includes("Playing")).map(game => 
+            (<CardComponent key={game._id} 
+              game={game}
+              open={open}
+              close={close}
+              pop={pop}
+              onclick={onclick}
+              setActiveCard={setActiveCard}
+            />
             ))}
           </div>
         </Tabs.Item>
@@ -77,15 +89,15 @@ function Navigation({onclick, open, close, pop, setActiveCard, name, onChange, g
           name={name}
         >
         <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
-            {games.map((game) => (
-              <CardComponent key={game._id}
-                game={game} 
-                open={open} 
-                onclick={onclick} 
-                close={close} 
-                pop={pop} 
-                setActiveCard={setActiveCard}
-              />
+          {games.filter((game) => game.state.includes("Completed")).map(game => 
+            (<CardComponent key={game._id} 
+              game={game}
+              open={open}
+              close={close}
+              pop={pop}
+              onclick={onclick}
+              setActiveCard={setActiveCard}
+            />
             ))}
           </div>
         </Tabs.Item>
@@ -93,15 +105,15 @@ function Navigation({onclick, open, close, pop, setActiveCard, name, onChange, g
           name={name}
         >
         <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
-            {games.map((game) => (
-              <CardComponent key={game._id}
-                game={game} 
-                open={open} 
-                onclick={onclick} 
-                close={close} 
-                pop={pop} 
-                setActiveCard={setActiveCard}
-              />
+        {games.filter((game) => game.state.includes("Retired")).map(game => 
+            (<CardComponent key={game._id} 
+              game={game}
+              open={open}
+              close={close}
+              pop={pop}
+              onclick={onclick}
+              setActiveCard={setActiveCard}
+            />
             ))}
           </div>
         </Tabs.Item>

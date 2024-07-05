@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import { useFetchGames } from '../hooks/getAllGames';
+import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
+import { useParams } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
 import Selects from '../components/Selects';
@@ -33,6 +35,14 @@ const Dashboard = () => {
     }
   }
 
+    const editStatus = async () => {
+      try {
+          setStatusGame()
+            await useEditGames(id, statusGame)  
+      } catch (error) {
+          alert(error)
+      }
+  }
 
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
