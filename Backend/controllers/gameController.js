@@ -19,6 +19,8 @@ exports.addGame = async (req, res, next) => {
 
 // Get all games
 exports.getGames = async (req, res, next) => {
+  const { page = 1, limit = 10} = req.query
+
   try {
     const search = req.query.name || "";
     let filters = {}
@@ -35,12 +37,18 @@ exports.getGames = async (req, res, next) => {
       filters.state = req.query.state;
     }
     const games = await Game.find({ $and: [{name: {$regex: search, $options: "i"} }, filters]})
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec()
     
+    const count = await Game.countDocuments()
     
     res.status(200).json({
       status: 'success',
       results: games.length,
-      games: games
+      games: games,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page
     });
   } catch (error) {
     next(error);
