@@ -12,7 +12,6 @@ const Edit = () => {
     const navigate = useNavigate()
     const [inputFile, setInputFile] = useState(null)
  
-    console.log(inputFile)
 
     useEffect(() => {
         if (games.length > 0) {
