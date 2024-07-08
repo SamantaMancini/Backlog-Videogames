@@ -1,7 +1,6 @@
 import { Tabs } from 'flowbite-react'
 import CardComponent from './Card'
 
-
 import React from 'react'
 
 function changeActiveTab(tab, callback) {
@@ -19,7 +18,7 @@ function Navigation({
   setActiveCard, 
   name, 
   onChange, 
-  games 
+  games,
 }) {
   
   return (

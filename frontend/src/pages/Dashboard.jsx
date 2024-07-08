@@ -13,16 +13,12 @@ import AdvanceSearch from '../components/AdvanceSearch';
 
 const Dashboard = () => {
     const [searchInput, setSearchInput] = useState("");
-    const { games } = useFetchGames(searchInput)
+    const { games, totalPages, handlePageChange, currentPage } = useFetchGames(searchInput)
     const [activeCard, setActiveCard] = useState(null);
     const [popUp, setPopUp] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
     const [statusGame, setStatusGame] = useState(null)
     const { id } = useParams
     
-    const onPageChange = (page) => {
-      setCurrentPage(page)
-    }
     
 
     const handleSearch = (searchValue) => {
@@ -89,11 +85,11 @@ const Dashboard = () => {
         onChange={handleStatus}
         name='state'
       />
-      <div>{currentPage}/14</div>
+      <div>{currentPage}/{totalPages}</div>
       <Pagination 
         layout="navigation" 
-        onPageChange={onPageChange} 
-        totalPages={14} 
+        onPageChange={handlePageChange} 
+        totalPages={totalPages} 
         currentPage={currentPage}
         showIcons
         />
