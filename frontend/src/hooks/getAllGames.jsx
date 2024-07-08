@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 export const useFetchGames = (filters) => { // Set default name to empty string
   const [games, setGames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -13,11 +15,12 @@ export const useFetchGames = (filters) => { // Set default name to empty string
 
       try {
         const response = await request({
-          url: `/api/v1/games`,
+          url: `/api/v1/games?limit=10&page=${currentPage}`,
           method: 'get',
           params: filters, // Send null for empty name
         });
         setGames(response.data.games);
+        setTotalPages(response.data.totalPages);
       } catch (error) {
         setError(error);
       } finally {
@@ -26,7 +29,11 @@ export const useFetchGames = (filters) => { // Set default name to empty string
     };
 
     fetchData();
-  }, [filters]); // Dependency on name only
+  }, [filters, currentPage]); // Dependency on name only
 
-  return { games, isLoading, error };
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  return { games, isLoading, error, currentPage, totalPages, handlePageChange };
 };
