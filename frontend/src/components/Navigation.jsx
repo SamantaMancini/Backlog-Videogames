@@ -9,21 +9,27 @@ function changeActiveTab(tab, callback) {
 }
 
 
-
 function Navigation({
   onclick, 
   open, 
   close, 
   pop, 
-  setActiveCard, 
   name, 
   onChange, 
   games,
+  onDrop,
+  onDragOver,
+  onDragStart
 }) {
   
   return (
     <div className="overflow-x-auto mt-5">
-      <Tabs aria-label="Full width tabs" variant="fullWidth" onActiveTabChange={(tab) => changeActiveTab(tab, onChange)}>
+      <Tabs aria-label="Full width tabs" variant="fullWidth" 
+        onActiveTabChange={(tab) => changeActiveTab(tab, onChange)}
+        id="droptarget"
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+        >
         <Tabs.Item active title="Backlog"
          name={name}
         >
@@ -35,7 +41,7 @@ function Navigation({
               close={close}
               pop={pop}
               onclick={onclick}
-              setActiveCard={setActiveCard}
+              onDragStart={onDragStart}
             />
             ))}
           </div>
@@ -51,7 +57,7 @@ function Navigation({
               close={close}
               pop={pop}
               onclick={onclick}
-              setActiveCard={setActiveCard}
+              onDragStart={onDragStart}
             />
             ))}
           </div>
@@ -67,7 +73,7 @@ function Navigation({
               close={close}
               pop={pop}
               onclick={onclick}
-              setActiveCard={setActiveCard}
+              onDragStart={onDragStart}
             />
             ))}
           </div>
@@ -83,7 +89,7 @@ function Navigation({
               close={close}
               pop={pop}
               onclick={onclick}
-              setActiveCard={setActiveCard}
+              onDragStart={onDragStart}
             />
             ))}
           </div>

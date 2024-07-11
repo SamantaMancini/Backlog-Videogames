@@ -11,14 +11,14 @@ import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
 
 
+
 const Dashboard = () => {
     const [searchInput, setSearchInput] = useState("");
     const { games, totalPages, handlePageChange, currentPage } = useFetchGames(searchInput)
-    const [activeCard, setActiveCard] = useState(null);
     const [popUp, setPopUp] = useState(false);
     const [statusGame, setStatusGame] = useState(null)
     const { id } = useParams
-    
+    const [draggedItem, setDraggedItem] = useState(null);
     
 
     const handleSearch = (searchValue) => {
@@ -41,14 +41,6 @@ const Dashboard = () => {
       }
     }
 
-    const editStatus = async () => {
-      try {
-          setStatusGame()
-            await useEditGames(id, statusGame)  
-      } catch (error) {
-          alert(error)
-      }
-  }
 
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
@@ -65,10 +57,24 @@ const Dashboard = () => {
     setSearchInput(new_value)
   };
 
-  const onDrop = (status, position) => {
-    console.log(`${activeCard} is going to place into ${status} and at the position ${position}`)
-  }
+  const handleDragStart = (event) => {
+    setDraggedItem(event.target);
+  };
 
+  const handleDragOver = (event) => {
+    event.preventDefault(); // Prevent default behavior
+  };
+  
+  const handleDrop = (event) => {
+    event.preventDefault();
+    if (event.target.classList.contains('dropzone')) { // Check for valid drop zone
+      const parent = draggedItem.parentNode;
+      if (parent) { // Safety check
+        parent.removeChild(draggedItem);
+        event.target.appendChild(draggedItem);
+      }
+    }
+  };
   return (
     <div className='flex flex-col justify-center items-center'>
       <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
@@ -81,9 +87,11 @@ const Dashboard = () => {
         open={() => setPopUp(true)}
         close={() => setPopUp(false)}
         pop={popUp}
-        setActiveCard={setActiveCard}
         onChange={handleStatus}
         name='state'
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
       />
       <div>{currentPage}/{totalPages}</div>
       <Pagination 
@@ -93,7 +101,6 @@ const Dashboard = () => {
         currentPage={currentPage}
         showIcons
         />
-      <h1>ActiveCard: {activeCard}</h1>
     </div>
   )
 }
