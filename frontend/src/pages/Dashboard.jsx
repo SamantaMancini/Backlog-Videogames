@@ -11,6 +11,7 @@ import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
 
 
+
 const Dashboard = () => {
   const [searchInput, setSearchInput] = useState("");
   const { games, totalPages, handlePageChange, currentPage, setGames } = useFetchGames(searchInput)
@@ -35,14 +36,6 @@ const Dashboard = () => {
     }
   }
 
-    const editStatus = async () => {
-      try {
-          setStatusGame()
-            await useEditGames(id, statusGame)  
-      } catch (error) {
-          alert(error)
-      }
-  }
 
   const handleFilterChange = (event) => {
     const selectedValue = event.target.value;
@@ -88,7 +81,6 @@ const Dashboard = () => {
         open={() => setPopUp(true)}
         close={() => setPopUp(false)}
         pop={popUp}
-        setActiveCard={setActiveCard}
         onChange={handleStatus}
         name='state'
         value={'Backlog'}
