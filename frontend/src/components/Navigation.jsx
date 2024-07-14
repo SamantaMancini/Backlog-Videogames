@@ -21,6 +21,34 @@ function Navigation({value, filteredGames, onclick, open, close, pop, setActiveC
          onChange={onChange}
          value={value}
         >
+         
+        <Tabs.Item title="Backlog">
+        <DropArea onDragOver={onDragOver} onDrop={onDrop} statusGame="Backlog">
+        Drop Backlog
+        </DropArea>
+        
+          <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>  
+            {games.filter((game) => game.state.includes("Backlog")).map(game => 
+            (<CardComponent key={game._id} 
+              game={game}
+              open={open}
+              close={close}
+              pop={pop}
+              statusGame={statusGame}
+              onclick={onclick}
+              onDragStart={onDragStart}
+            />
+            ))}
+          </div>
+          
+        </Tabs.Item>
+        
+        <Tabs.Item title="Playing">
+        <DropArea onDragOver={onDragOver} onDrop={onDrop} statusGame="Playing">
+        Drop Playing
+        </DropArea>
+
+        <div className={"state"} onDragOver={onDragOver} onDrop={onDrop}>Drop: here</div>
           <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
             {games.map((game) => (
               <CardComponent key={game._id}
