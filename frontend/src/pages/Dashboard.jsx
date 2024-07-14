@@ -4,11 +4,12 @@ import { useFetchGames } from '../hooks/getAllGames';
 import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
-import { useParams } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
 import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
+import DropArea from '../components/DropArea';
+
 
 
 
@@ -52,9 +53,10 @@ const Dashboard = () => {
     setSearchInput(new_value)
   };
 
-  const onDrop = (status, position) => {
-    console.log(`${activeCard} is going to place into ${status} and at the position ${position}`)
-  }
+  const handleDragStart = (event) => {
+    setDraggedItem(event.target.getAttribute("data-id"));
+    console.log("card", draggedItem)
+  };
 
   const handleDragOver = (event) => {
     event.preventDefault(); // Prevent default behavior
