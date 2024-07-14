@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import { useFetchGames } from '../hooks/getAllGames';
 import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
