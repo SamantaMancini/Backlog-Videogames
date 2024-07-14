@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import { useFetchGames } from '../hooks/getAllGames';
 import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
@@ -18,7 +19,7 @@ const Dashboard = () => {
     const { games, totalPages, handlePageChange, currentPage, setGames } = useFetchGames(searchInput)
     const [popUp, setPopUp] = useState(false);
     const [draggedItem, setDraggedItem] = useState(null);
-    
+    const [statusGame, setStatusGame] = useState("")
     
 
     const handleSearch = (searchValue) => {
@@ -62,19 +63,13 @@ const Dashboard = () => {
     event.preventDefault(); // Prevent default behavior
   };
   
-  const handleDrop = async (targetState) => {
-    let json = draggedItem.dataTransfer('text/plain')
-      try {
-        // Update game state using onEditGame function
-        const updateGame = await useEditGames(json, targetState); // Replace with your actual function call
-        setDraggedItem(updateGame)
-        console.log('Game state updated:', json, targetState);
-      } catch (error) {
-        console.error('Error updating game state:', error);
-      } finally {
-        setDraggedItem(null); // Reset dragged card state
-      }
-  }
+  const handleDrop = (target) => {
+    console.log("L'id della card", draggedItem, "lo stato della card è:", statusGame);
+  
+    // Calculate the updated game state based on the dropped item and current state
+      setStatusGame(target);
+      useEditGames(draggedItem, statusGame);
+  };
   return (
     <div className='flex flex-col justify-center items-center'>
       <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
@@ -90,6 +85,7 @@ const Dashboard = () => {
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
+        statusGame={statusGame}
       />
       <div>{currentPage}/{totalPages}</div>
       <Pagination 

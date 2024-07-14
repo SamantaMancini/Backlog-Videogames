@@ -18,19 +18,20 @@ function Navigation({
   games,
   onDrop,
   onDragOver,
-  onDragStart
+  onDragStart,
+  statusGame
 }) {
   return (
     <div className="overflow-x-auto mt-5">
-            <DropArea onDragOver={onDragOver} onDrop={onDrop} targetState={"Backlog"}>
+            <DropArea onDragOver={onDragOver} onDrop={onDrop}>
         Drop
         </DropArea>
       <Tabs aria-label="Full width tabs" variant="fullWidth" 
         onActiveTabChange={(tab) => changeActiveTab(tab)}
         >
          
-        <Tabs.Item active title="Backlog">
-        <DropArea onDragOver={onDragOver} onDrop={onDrop} targetState={"Playing"}>
+        <Tabs.Item title="Backlog">
+        <DropArea onDragOver={onDragOver} onDrop={onDrop} statusGame="Playing">
         Drop
         </DropArea>
         
@@ -41,6 +42,7 @@ function Navigation({
               open={open}
               close={close}
               pop={pop}
+              statusGame={statusGame}
               onclick={onclick}
               onDragStart={onDragStart}
             />
@@ -61,6 +63,7 @@ function Navigation({
               pop={pop}
               onclick={onclick}
               onDragStart={onDragStart}
+              status={statusGame}
             />
             ))}
           </div>
@@ -77,6 +80,7 @@ function Navigation({
               pop={pop}
               onclick={onclick}
               onDragStart={onDragStart}
+              status={statusGame}
             />
             ))}
           </div>
@@ -93,6 +97,7 @@ function Navigation({
               pop={pop}
               onclick={onclick}
               onDragStart={onDragStart}
+              status={statusGame}
             />
             ))}
           </div>
