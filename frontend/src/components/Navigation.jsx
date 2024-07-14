@@ -27,15 +27,15 @@ function Navigation({
         Drop
         </DropArea>
       <Tabs aria-label="Full width tabs" variant="fullWidth" 
-        onActiveTabChange={(tab) => changeActiveTab(tab, onChange)}
-        id="droptarget"
-        onDragOver={onDragOver}
-        onDrop={onDrop}
+        onActiveTabChange={(tab) => changeActiveTab(tab)}
         >
-        <Tabs.Item active title="Backlog"
-         name={name}
-        >
-          <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
+         
+        <Tabs.Item title="Backlog">
+        <DropArea onDragOver={onDragOver} onDrop={onDrop} statusGame="Playing">
+        Drop
+        </DropArea>
+        
+          <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>  
             {games.filter((game) => game.state.includes("Backlog")).map(game => 
             (<CardComponent key={game._id} 
               game={game}

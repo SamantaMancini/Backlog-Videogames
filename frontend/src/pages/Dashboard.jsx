@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import { useFetchGames } from '../hooks/getAllGames';
 import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
@@ -15,28 +17,28 @@ import DropArea from '../components/DropArea';
 
 
 const Dashboard = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const { games, totalPages, handlePageChange, currentPage, setGames } = useFetchGames(searchInput)
-  const [popUp, setPopUp] = useState(false);
-  const [draggedItem, setDraggedItem] = useState(null);
-  const [statusGame, setStatusGame] = useState("Completed")
-
+    const [searchInput, setSearchInput] = useState("");
+    const { games, totalPages, handlePageChange, currentPage, setGames } = useFetchGames(searchInput)
+    const [popUp, setPopUp] = useState(false);
+    const [draggedItem, setDraggedItem] = useState(null);
+    const [statusGame, setStatusGame] = useState("")
+    
 
   const handleSearch = (searchValue) => {
     let new_value = Object.assign({}, searchInput, { "name": searchValue })
     setSearchInput(new_value)
   }
 
-
-  const handleDelete = async (id) => {
-    try {
-      await deleteGame(id)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setPopUp(false)
+    
+    const handleDelete = async (id) => {
+      try {
+        await deleteGame(id)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setPopUp(false)
+      }
     }
-  }
 
 
   const handleFilterChange = (event) => {
@@ -62,40 +64,39 @@ const Dashboard = () => {
   const handleDragOver = (event) => {
     event.preventDefault(); // Prevent default behavior
   };
-
+  
   const handleDrop = (target) => {
     console.log("L'id della card", draggedItem, "lo stato della card è:", statusGame);
-
+  
     // Calculate the updated game state based on the dropped item and current state
-    // setStatusGame(target);
-    console.log("target:", target);
-    useEditGames(draggedItem, {"state":statusGame});
-    setSearchInput(Object.assign({}, searchInput))
+      setStatusGame(target);
+      useEditGames(draggedItem, statusGame);
   };
   return (
     <div className='flex flex-col justify-center items-center'>
       <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
       <Searchbar onChange={(e) => handleSearch(e.target.value)} />
-      <AdvanceSearch games={games} searchInput={searchInput} />
+      <AdvanceSearch games={games} searchInput={searchInput}/>
       <Selects onChange={handleFilterChange} />
-      <Navigation
-        games={games}
+      <Navigation 
+        games={games}  
         onclick={handleDelete}
         open={() => setPopUp(true)}
         close={() => setPopUp(false)}
         pop={popUp}
-        onChange={handleStatus}
-        name='state'
-        value={'Backlog'}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        statusGame={statusGame}
       />
       <div>{currentPage}/{totalPages}</div>
-      <Pagination
-        layout="navigation"
-        onPageChange={handlePageChange}
-        totalPages={totalPages}
+      <Pagination 
+        layout="navigation" 
+        onPageChange={handlePageChange} 
+        totalPages={totalPages} 
         currentPage={currentPage}
         showIcons
-      />
+        />
     </div>
   )
 }
