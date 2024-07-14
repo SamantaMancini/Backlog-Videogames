@@ -4,21 +4,21 @@ import { useFetchGames } from '../hooks/getAllGames';
 import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
 import Searchbar from '../components/Searchbar';
-import { useParams } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
 import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
+import DropArea from '../components/DropArea';
+
 
 
 
 const Dashboard = () => {
     const [searchInput, setSearchInput] = useState("");
-    const { games, totalPages, handlePageChange, currentPage } = useFetchGames(searchInput)
+    const { games, totalPages, handlePageChange, currentPage, setGames } = useFetchGames(searchInput)
     const [popUp, setPopUp] = useState(false);
-    const [statusGame, setStatusGame] = useState(null)
-    const { id } = useParams
     const [draggedItem, setDraggedItem] = useState(null);
+    
     
 
     const handleSearch = (searchValue) => {
@@ -26,11 +26,7 @@ const Dashboard = () => {
       setSearchInput(new_value)
     }
 
-    const handleStatus = (status) => {
-      let new_value = Object.assign({}, searchInput, {"state": status})
-      setSearchInput(new_value)
-    }
-
+    
     const handleDelete = async (id) => {
       try {
         await deleteGame(id)
@@ -58,23 +54,27 @@ const Dashboard = () => {
   };
 
   const handleDragStart = (event) => {
-    setDraggedItem(event.target);
+    setDraggedItem(event.target.getAttribute("data-id"));
+    console.log("card", draggedItem)
   };
 
   const handleDragOver = (event) => {
     event.preventDefault(); // Prevent default behavior
   };
   
-  const handleDrop = (event) => {
-    event.preventDefault();
-    if (event.target.classList.contains('dropzone')) { // Check for valid drop zone
-      const parent = draggedItem.parentNode;
-      if (parent) { // Safety check
-        parent.removeChild(draggedItem);
-        event.target.appendChild(draggedItem);
+  const handleDrop = async (targetState) => {
+    let json = draggedItem.dataTransfer('text/plain')
+      try {
+        // Update game state using onEditGame function
+        const updateGame = await useEditGames(json, targetState); // Replace with your actual function call
+        setDraggedItem(updateGame)
+        console.log('Game state updated:', json, targetState);
+      } catch (error) {
+        console.error('Error updating game state:', error);
+      } finally {
+        setDraggedItem(null); // Reset dragged card state
       }
-    }
-  };
+  }
   return (
     <div className='flex flex-col justify-center items-center'>
       <h1 className='text-2xl mt-2 font-bold'>Backlog Videogames</h1>
@@ -87,8 +87,6 @@ const Dashboard = () => {
         open={() => setPopUp(true)}
         close={() => setPopUp(false)}
         pop={popUp}
-        onChange={handleStatus}
-        name='state'
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDrop={handleDrop}

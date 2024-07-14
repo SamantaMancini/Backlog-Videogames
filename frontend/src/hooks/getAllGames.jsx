@@ -35,5 +35,5 @@ export const useFetchGames = (filters) => { // Set default name to empty string
     setCurrentPage(page);
   };
 
-  return { games, isLoading, error, currentPage, totalPages, handlePageChange };
+  return { games, isLoading, error, currentPage, totalPages, handlePageChange, setGames };
 };

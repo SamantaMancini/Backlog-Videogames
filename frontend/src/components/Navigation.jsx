@@ -1,11 +1,12 @@
 import { Tabs } from 'flowbite-react'
 import CardComponent from './Card'
+import DropArea from './DropArea'
 
 import React from 'react'
 
 function changeActiveTab(tab, callback) {
   let lists = ["Backlog", "Playing", "Completed", "Retired"]
-  callback(lists[tab])
+  callback = lists[tab]
 }
 
 
@@ -14,26 +15,26 @@ function Navigation({
   open, 
   close, 
   pop, 
-  name, 
-  onChange, 
   games,
   onDrop,
   onDragOver,
   onDragStart
 }) {
-  
   return (
     <div className="overflow-x-auto mt-5">
+            <DropArea onDragOver={onDragOver} onDrop={onDrop} targetState={"Backlog"}>
+        Drop
+        </DropArea>
       <Tabs aria-label="Full width tabs" variant="fullWidth" 
-        onActiveTabChange={(tab) => changeActiveTab(tab, onChange)}
-        id="droptarget"
-        onDragOver={onDragOver}
-        onDrop={onDrop}
+        onActiveTabChange={(tab) => changeActiveTab(tab)}
         >
-        <Tabs.Item active title="Backlog"
-         name={name}
-        >
-          <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
+         
+        <Tabs.Item active title="Backlog">
+        <DropArea onDragOver={onDragOver} onDrop={onDrop} targetState={"Playing"}>
+        Drop
+        </DropArea>
+        
+          <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>  
             {games.filter((game) => game.state.includes("Backlog")).map(game => 
             (<CardComponent key={game._id} 
               game={game}
@@ -45,10 +46,12 @@ function Navigation({
             />
             ))}
           </div>
+          
         </Tabs.Item>
+        
         <Tabs.Item title="Playing"
-          name={name}
         >
+        <div className={"state"} onDragOver={onDragOver} onDrop={onDrop}>Drop: here</div>
           <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
           {games.filter((game) => game.state.includes("Playing")).map(game => 
             (<CardComponent key={game._id} 
@@ -63,8 +66,8 @@ function Navigation({
           </div>
         </Tabs.Item>
         <Tabs.Item title="Completed"
-          name={name}
         >
+        <div className={"state"} onDragOver={onDragOver} onDrop={onDrop}>Drop: here</div>
         <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
           {games.filter((game) => game.state.includes("Completed")).map(game => 
             (<CardComponent key={game._id} 
@@ -78,9 +81,9 @@ function Navigation({
             ))}
           </div>
         </Tabs.Item>
-        <Tabs.Item title="Retired"
-          name={name}
+        <Tabs.Item title="Retired"     
         >
+        <div className={"state"} onDragOver={onDragOver} onDrop={onDrop}>Drop: here</div>
         <div className='overflow-y-auto h-[10h] flex flex-col justify-center items-center 2xl:flex'>
         {games.filter((game) => game.state.includes("Retired")).map(game => 
             (<CardComponent key={game._id} 
