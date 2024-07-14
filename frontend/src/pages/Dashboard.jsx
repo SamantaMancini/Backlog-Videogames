@@ -1,8 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useState } from 'react'
 import { useFetchGames } from '../hooks/getAllGames';
 import { useEditGames } from '../hooks/editGame';
 import { deleteGame } from '../hooks/deleteGame';
@@ -11,7 +8,6 @@ import Navigation from '../components/Navigation';
 import { Pagination } from 'flowbite-react'
 import Selects from '../components/Selects';
 import AdvanceSearch from '../components/AdvanceSearch';
-import DropArea from '../components/DropArea';
 
 
 
@@ -21,7 +17,7 @@ const Dashboard = () => {
     const { games, totalPages, handlePageChange, currentPage, setGames } = useFetchGames(searchInput)
     const [popUp, setPopUp] = useState(false);
     const [draggedItem, setDraggedItem] = useState(null);
-    const [statusGame, setStatusGame] = useState("")
+    const [statusGame, setStatusGame] = useState("Completed")
     
 
   const handleSearch = (searchValue) => {
@@ -67,10 +63,12 @@ const Dashboard = () => {
   
   const handleDrop = (target) => {
     console.log("L'id della card", draggedItem, "lo stato della card è:", statusGame);
-  
+
     // Calculate the updated game state based on the dropped item and current state
-      setStatusGame(target);
-      useEditGames(draggedItem, statusGame);
+    // setStatusGame(target);
+    console.log("target:", target);
+    useEditGames(draggedItem, {"state":statusGame});
+    setSearchInput(Object.assign({}, searchInput))
   };
   return (
     <div className='flex flex-col justify-center items-center'>

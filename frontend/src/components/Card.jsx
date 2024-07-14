@@ -11,13 +11,13 @@ function CardComponent({game, open, onclick, close, pop, onDragStart, statusGame
   
   return (
     <div className='flex flex-wrap gap-5'>
-        <Card className="max-w-sm mt-3 cursor-grab active:opacity-[0.5] active:text-gray-100" data-id={game._id} draggable={true} onDragStart={(event) => onDragStart(event)}>
+        <Card className="max-w-sm mt-3 cursor-grab active:opacity-[0.5] active:text-gray-100" data-id={game._id} draggable={true} onDragStart={(target) => onDragStart(target)}>
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{game.name}</h2> 
         <p className="font-normal text-gray-700 dark:text-gray-400">description: {game.description}</p> 
         <p className="font-normal text-gray-700 dark:text-gray-400">features: {game.feautures}</p>
         <p className="font-normal text-gray-700 dark:text-gray-400">genre: {game.genre}</p>
         <p className="font-normal text-gray-700 dark:text-gray-400">platform: {game.platform}</p>
-        <p className="font-normal text-gray-700 dark:text-gray-400">state: {`${statusGame}` ? `${statusGame}`: `${game.state}`}</p>
+        <p className="font-normal text-gray-700 dark:text-gray-400">state: {game.state}</p>
         { pop &&
         <PopUp onClick={() => onclick(game._id)} close={close} />
     }
